@@ -1,1 +1,84 @@
 /* CSS */
+#dugmeLevo {
+    box-shadow: inset 3px 3px 80px rgb(105, 96, 96);
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(62, 150, 226);
+    font-weight: bold;
+    font-style: italic;
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
+#dugmeLevo:hover {
+    text-shadow: 2px 2px 0px rgba(74, 75, 69, 0.5);
+    box-shadow: 0 0 5px rgb(27, 25, 25), inset 0px 0px 40px rgb(105, 96, 96);
+}
+
+.selectovan {
+    box-shadow: inset 3px 3px 80px rgb(187, 34, 34);
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(174, 185, 23) !important;
+    font-weight: bold;
+    font-style: italic;
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
+.bg-danger {
+    background-color: red !important;
+}
+
+.success {
+    box-shadow: inset 3px 3px 80px rgb(16, 180, 43) !important;
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(63, 146, 98);
+    font-weight: bold;
+    font-style: italic;
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
+.textLevo {
+    padding-top: 4px;    
+    text-align: center;
+    color: white;
+}
+
+.btn-success {
+    font-size: 50px;
+    margin-left: 37.5%;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.body {
+    background-image: 
+        linear-gradient(
+            to right,
+            rgb(96, 151, 155) 15%,
+            rgb(52, 121, 133) 40%,
+            rgb(134, 73, 134) 85%
+        )
+}
