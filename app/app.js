@@ -13,5 +13,10 @@ app.config(function ($routeProvider) {
         	controller: 'SpojniceController',
         	templateUrl: '/app/partials/spojnice.html'
         })
+        .when('/skocko',
+        {
+        	controller: 'SkockoController',
+        	templateUrl: '/app/partials/skocko.html'
+        })
         .otherwise({ redirectTo: '/home' });
 });

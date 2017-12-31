@@ -1,0 +1,24 @@
+<div class="container"
+    <div class="row">
+        <div class="col-1">
+            <table>
+                <tr ng-repeat="option in options">
+                    <td ng-click="selectedOption(option)">
+                        {{option.sign}}
+                    </td>
+                </tr>
+            </table>  
+        </div>
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <table>
+                    Niz printova:
+                <th>
+                    <td>{{firstRow}}</td>
+                </th>
+            </table>
+        </div>
+    </div>
+</div>
