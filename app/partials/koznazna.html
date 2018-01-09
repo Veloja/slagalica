@@ -1,0 +1,21 @@
+<div class="body">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 id="koznaznaNaslov">{{activeQuestion+1 + '. ' + questions[activeQuestion].text}}</h1>
+            </div>
+            <div class="row">
+                <div ng-repeat="answer in questions[activeQuestion].posibilities" class="col-6">
+                    <button ng-click="selectAnswer(answer)"
+                            ng-class="{'bg-info': answer.selected,
+                                        'success': answer.success,
+                                        'bg-danger': answer.fail}",
+                            ng-disabled="disable"
+                            class="koznaznaBtn">{{$index+1 + '. '}}{{answer.answer}}
+                    </button>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+        

@@ -1,24 +1,26 @@
-<div class="container"
-    <div class="row">
-        <div class="col-1">
-            <table>
-                <tr ng-repeat="option in options">
-                    <td ng-click="selectedOption(option)">
-                        {{option.sign}}
-                    </td>
-                </tr>
-            </table>  
-        </div>
-        <br>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <table>
-                    Niz printova:
-                <th>
-                    <td>{{firstRow}}</td>
-                </th>
-            </table>
+<div class="body">
+    <div class="container">
+        <div class="row">
+             <div class="col-2">
+                    <button ng-repeat="option in options track by $index"
+                            ng-click="selectedOption(option)"
+                            class="btn choose">
+                        <h4 class="opcijeLevo">{{option.sign}}</h4>
+                    </button>
+             </div>
+             <div class="col-10">row: {{row}} column: {{column}} go: {{gameOver}}
+                <div ng-repeat="combination in bigArrOfCombinations track by $index" class="row">
+                    <div ng-repeat="item in bigArrOfCombinations[$index] track by $index" class="col-sm-2">
+                        <button class="rightRow"><h4 class="opcijeLevo">{{item.id}}</h4></button>
+                    </div>
+                    <div ng-repeat="item in results[$index] track by $index" class="col-sm-1">
+                        <button ng-class="item.color" class="rightRow"><h4 class="opcijeLevo">{{item.id}}</h4></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
+

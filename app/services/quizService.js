@@ -1,39 +1,20 @@
 app.service('quizService', function(){
-    var random = Math.floor((Math.random() * 3));
     
     var leftColumnOptions = [];
     var rightColumnOptions = [];
 
     var cities = [{id: 1,
-                  name: "Beograd",
-                  selected: false,
-                  solved: false,
-                  fail: false},
+                  name: "Beograd"},
                  {id: 2,
-                  name: "Bec",
-                  selected: false,
-                  solved: false,
-                  fail: false},
+                  name: "Bec"},
                  {id: 3,
-                  name: "Amsterdam",
-                  selected: false,
-                  solved: false,
-                  fail: false},
+                  name: "Amsterdam"},
                   {id: 4,
-                    name: "Paris",
-                    selected: false,
-                    solved: false,
-                    fail: false},
+                    name: "Paris"},
                    {id: 5,
-                    name: "New York",
-                    selected: false,
-                    solved: false,
-                    fail: false},
+                    name: "New York"},
                    {id: 6,
-                    name: "Tokyo",
-                    selected: false,
-                    solved: false,
-                    fail: false}];
+                    name: "Tokyo"}];
 
     var writers = [{id: 1,
                         name: "Mesa Selimovic",
@@ -103,14 +84,14 @@ app.service('quizService', function(){
         leftColumnOptions.push(cities);
         leftColumnOptions.push(directors);
         // randomize all arrays individualy for left column 
-            // var shuffledWriters = shuffle(writers);
-            // leftColumnOptions.push(shuffledWriters);
-            // var shuffledCities = shuffle(cities);
-            // leftColumnOptions.push(shuffledCities);
-            // var shuffledDirectors = shuffle(directors);
-            // leftColumnOptions.push(shuffledDirectors);
+            var shuffledWriters = shuffle(writers);
+            leftColumnOptions.push(shuffledWriters);
+            var shuffledCities = shuffle(cities);
+            leftColumnOptions.push(shuffledCities);
+            var shuffledDirectors = shuffle(directors);
+            leftColumnOptions.push(shuffledDirectors);
             // randomize left column with only one array
-                return leftColumnOptions[random];
+                return leftColumnOptions[Math.floor((Math.random() * 3))];
     }
     
     
@@ -215,14 +196,14 @@ app.service('quizService', function(){
         rightColumnOptions.push(countries);
         rightColumnOptions.push(movies);
         // randomize all arrays individualy for right column
-            // var shuffledNovels = shuffle(novels);
-            // rightColumnOptions.push(shuffledNovels);
-            // var shuffledCountries = shuffle(countries);
-            // rightColumnOptions.push(shuffledCountries);
-            // var shuffledMovies = shuffle(movies);
-            // rightColumnOptions.push(shuffledMovies);
+            var shuffledNovels = shuffle(novels);
+            rightColumnOptions.push(shuffledNovels);
+            var shuffledCountries = shuffle(countries);
+            rightColumnOptions.push(shuffledCountries);
+            var shuffledMovies = shuffle(movies);
+            rightColumnOptions.push(shuffledMovies);
             // randomize left column with only one array
-                return rightColumnOptions[random];
+                return rightColumnOptions[Math.floor((Math.random() * 3))];
     }
 
 // FISHER YATES shuffle algorithm
@@ -251,28 +232,73 @@ this.getSigns = function(){
     {
         id: 1,
         sign: "heart",
-        chosen: false
+        chosen: false,
+        red: false,
+        yellow: false
     },
     {
         id: 2,
         sign: "pike",
-        chosen: false
+        chosen: false,
+        red: false,
+        yellow: false
     },
     {
         id: 3,
         sign: "leaf",
-        chosen: false
+        chosen: false,
+        red: false,
+        yellow: false
     },
     {
         id: 4,
         sign: "diamond",
-        chosen: false
+        chosen: false,
+        red: false,
+        yellow: false
     },
     {
         id: 5,
         sign: "skocko",
-        chosen: false
+        chosen: false,
+        red: false,
+        yellow: false
     },
 ]
 
-       });
+
+this.getQuestions = function(){
+    return questions;
+}
+
+var questions = [
+    {id: 1, 
+     text: "What is middle name of LeBron James?",
+     posibilities: [{answer: "Raymone", correct: false}, 
+                    {answer: "Lavar", correct: true},
+                    {answer: "Josh", correct: false},
+                    {answer: "Michael", correct: false}],
+     selected: false},
+     {id: 2, 
+     text: "What is middle name of Kevin Durant?",
+     posibilities: [{answer: "Raymone", correct: true}, 
+                    {answer: "Lavar", correct: false},
+                    {answer: "Wayne", correct: false},
+                    {answer: "Michael", correct: false}],
+     selected: null},
+     {id: 3, 
+     text: "What is middle name of Kobe Bryant?",
+     posibilities: [{answer: "Bean", correct: false}, 
+                    {answer: "Lavar", correct: false},
+                    {answer: "Josh", correct: false},
+                    {answer: "Michael", correct: true}],
+     selected: null},
+     {id: 4, 
+     text: "What is middle name of Michael Jordan?",
+     posibilities: [{answer: "Jeffrey", correct: false}, 
+                    {answer: "Lavar", correct: true},
+                    {answer: "Josh", correct: false},
+                    {answer: "Michael", correct: false}],
+     selected: null}];
+
+});

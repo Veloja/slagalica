@@ -18,5 +18,10 @@ app.config(function ($routeProvider) {
         	controller: 'SkockoController',
         	templateUrl: '/app/partials/skocko.html'
         })
+        .when('/koznazna',
+        {
+        	controller: 'KoznaznaController',
+        	templateUrl: '/app/partials/koznazna.html'
+        })
         .otherwise({ redirectTo: '/home' });
 });

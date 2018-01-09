@@ -1,120 +1,185 @@
 app.controller('HomeController', function ($scope) {
-console.log('HOME CONTROLER IS ACTIVE');
+    console.log('HOME CONTROLER IS ACTIVE');
 });
 
-app.controller('SpojniceController', function ($scope, $interval, quizService) {
-// retrieving data from quizService
-    $scope.writers = quizService.getWriters();
-    $scope.novels = quizService.getNovels();
-    
-// tracking $scopes    
-    $scope.trackWriter = 0;
-    $scope.currentlyOpenedWriter = $scope.writers[0];
-    $scope.writers[0].selected = true;
-    $scope.points = 0;
-    $scope.cantSelect = false;
-    $scope.reloadPage = function(){window.location.reload();}
-    $scope.counter = 5;  
 
-// only one writer can be opened
-    $scope.openWriter = function(writer){
-       if($scope.currentlyOpenedWriter === null){
-        writer.selected = true;
-        $scope.currentlyOpenedWriter = writer;
-       }
+app.controller('SpojniceController', function ($scope, $interval, quizService) {
+    // retrieving data from quizService
+    init();
+
+    $scope.reloadPage = function () {
+        init();
+    }
+    $scope.counter = 5;
+
+    // only one writer can be opened
+    $scope.openWriter = function (writer) {
+        if ($scope.currentlyOpenedWriter === null) {
+            writer.selected = true;
+            $scope.currentlyOpenedWriter = writer;
+        }
     }
 
-// check first if writer is opened
-    $scope.openBook = function(book){
-        if($scope.currentlyOpenedWriter !== null){
-         // if YES, then compare currentlyOpenedWriter and opened book: if correct => 
-            if($scope.currentlyOpenedWriter.id === book.writerId){
+    // check first if writer is opened
+    $scope.openBook = function (book) {
+        if ($scope.currentlyOpenedWriter !== null) {
+            // if YES, then compare currentlyOpenedWriter and opened book: if correct => 
+            if ($scope.currentlyOpenedWriter.id === book.writerId) {
                 $scope.currentlyOpenedWriter.solved = true;
                 book.solved = true;
-                if($scope.currentlyOpenedWriter.solved === true && book.solved === true){
+                if ($scope.currentlyOpenedWriter.solved === true && book.solved === true) {
                     $scope.success = true;
                     $scope.currentlyOpenedWriter.selected = false;
-                    $scope.trackWriter++;
-                    $scope.points+=2;
+                    $scope.points += 2;
                     nextWriter();
                 }
-        // if currentlyOpenedWriter and opened book don't match =>
+                // if currentlyOpenedWriter and opened book don't match =>
             } else {
                 $scope.currentlyOpenedWriter.fail = true;
                 book.fail = true;
-                $scope.trackWriter++;
                 nextWriter();
             }
         }
     }
-    console.log($scope.currentlyOpenedWriter[0]);
 
-    // FISHER YATES shuffle algorithm
-    // function shuffle(array) {
-    //     var counter = array.length;
-    //     // While there are elements in the array
-    //     while (counter > 0) {
-    //         // Pick a random index
-    //         var index = Math.floor(Math.random() * counter);
-    //         // Decrease counter by 1
-    //         counter--;
-    //         // And swap the last element with it
-    //         var temp = array[counter];
-    //         array[counter] = array[index];
-    //         array[index] = temp;
-    //         // set currentlyOpenedWriter on the beginning of an array??????
-    //         // $scope.currentlyOpenedWriter[0] = array[index];
-    //         // alow currentlyOpenedWriter to go on next writer if they match or not
-            
+    // function to go on to a next writer when matching completed
+    function nextWriter() {
+        var indexOfCurrentWritter = $scope.writers.indexOf($scope.currentlyOpenedWriter);
+        console.log($scope.writers.indexOf($scope.currentlyOpenedWriter));
+        var nextWriter = $scope.writers[indexOfCurrentWritter + 1];
+        nextWriter.selected = true;
+        $scope.currentlyOpenedWriter = nextWriter;
+    }
+
+    function init() {
+        $scope.writers = quizService.getWriters();
+        $scope.writers.forEach(writter => {
+            writter.selected = false;
+            writter.fail = false;
+            writter.success = false;
+        });
+        $scope.novels = quizService.getNovels();
+
+        $scope.currentlyOpenedWriter = $scope.writers[0];
+        $scope.writers[0].selected = true;
+        $scope.points = 0;
+        $scope.cantSelect = false;
+    }
+
+    // Countdown time and GAME OVER if counter = 0
+    // setInterval(function(){
+    //     $scope.counter--;
+    //     $scope.$apply();
+    //     if($scope.counter === 0){
+    //         $timeout.cancel($scope.counter);
     //     }
-     
-    //     return array;
-    //  }
+    // }, 1000);
 
-    //  var arr = $scope.writers;
-    //  arr = shuffle(arr);
-    //  console.log(arr);
-    //  console.log(arr[0]);
-    //  console.log($scope.currentlyOpenedWriter[0]);
+    // When time is up => GAME OVER
 
-// function to go on to a next writer when matching completed
-    function nextWriter(){
-        for(var i = 1; i < $scope.writers.length; i++){
-            // debugger;
-            if($scope.currentlyOpenedWriter.id < $scope.writers[$scope.trackWriter].id){
-                $scope.currentlyOpenedWriter = $scope.writers[$scope.trackWriter];
-                $scope.currentlyOpenedWriter.selected = true;
+
+});
+
+app.controller('SkockoController', function ($scope, quizService) {
+    console.log('SKOCKO CTRL');
+    // retrieve signs
+    $scope.options = quizService.getSigns();
+    // winning combination
+    $scope.win = [1, 1, 4, 4];
+    // arrays
+    $scope.bigArrOfCombinations = [
+    [{}, {}, {}, {}],
+    [{}, {}, {}, {}],
+    [{}, {}, {}, {}],
+    [{}, {}, {}, {}],
+    [{}, {}, {}, {}]
+    ];
+    $scope.results = [
+                      [{}, {}, {}, {}],
+                      [{}, {}, {}, {}],
+                      [{}, {}, {}, {}],
+                      [{}, {}, {}, {}]
+                     ];
+
+    $scope.row = 0;
+    $scope.column = 0;
+    $scope.gameOver = false;
+    // Choose myCombination
+    $scope.selectedOption = function (option) {
+        if (!$scope.gameOver) {
+            if ($scope.column === 4) {
+                if ($scope.row < 3) {
+                    $scope.column = 0;
+                    $scope.row++;
+                } else {
+                    $scope.gameOver = true;
+                    return;
+                }
+            }
+            $scope.bigArrOfCombinations[$scope.row][$scope.column] = option;
+            $scope.column++;
+            if($scope.column === 4){
+                checkSkocko($scope.row);
             }
         }
     }
 
-// Countdown time and GAME OVER if counter = 0
-    setInterval(function(){
-        $scope.counter--;
-        $scope.$apply();
-        if($scope.counter === 0){
-            $timeout.cancel($scope.counter);
+    function checkSkocko(row) {
+        var izabrani = $scope.bigArrOfCombinations[row].slice();
+        var dobitni = $scope.win.slice();
+        var result = [];
+        for(var i = 0; i < izabrani.length; i++){
+            if(izabrani[i].id === dobitni[i]){
+                result.push({ color: 'red' });
+                izabrani[i] = null;
+                dobitni[i] = null;
+            }
         }
-    }, 1000);
-
-// When time is up => GAME OVER
-   
-
-    });
-
-app.controller('SkockoController', function ($scope, quizService) {
-// retrieve 
-    $scope.options = quizService.getSigns();
-
-    $scope.firstRow = [];
-
-    $scope.selectedOption = function(sign){
-        $scope.firstRow.push(sign);
-        sign.chosen = true;
-        if($scope.firstRow.length > 3){
-            console.log('go to next combination');
+        for(var i = 0; i < izabrani.length; i++){
+            var current = izabrani[i];
+            if(current !== null && dobitni.indexOf(current.id) !== -1){
+                result.push({ color: 'yellow' });
+            }
+        }
+        
+        for(var i = 0; i < result.length; i++){
+            $scope.results[row][i] = result[i];
         }
     }
 
+});
 
-    });
+app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
+
+$scope.questions = quizService.getQuestions();
+
+$scope.activeQuestion = 0;
+$scope.gameOver = false;
+$scope.disable = false;
+
+$scope.selectAnswer = function(answer){
+    answer.selected = true;
+    $scope.disable = true;
+    // first select one answer then check if correct
+    $timeout(function() {
+        if(answer.selected && answer.correct){
+            answer.success = true;
+        } else {
+            answer.fail = true;
+        };
+    }, 2000);
+
+    // 5 seconds after answer is selected go to next question
+    if(answer.selected){
+        $timeout(function() {
+            $scope.activeQuestion++;
+            $scope.disable = false;
+        }, 5000);
+    }
+    
+}
+
+
+
+
+});
