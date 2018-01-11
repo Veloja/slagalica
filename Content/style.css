@@ -199,3 +199,92 @@ html, body {
     box-shadow: 0 0 5px rgb(27, 25, 25), inset 0px 0px 40px rgb(105, 96, 96);
 }
 
+
+/* --------- ASOCIJACIJE ---------- */
+
+.btnAsocijacije {
+    width: 200px;
+    margin: 20px;
+    box-shadow: inset 3px 3px 80px rgb(105, 96, 96);
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(62, 150, 226);
+    font-weight: bold;
+    font-style: italic;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+    color: white;
+}
+
+.inputAsocijacije {
+    width: 200px;
+    margin: 20px;
+    box-shadow: inset 3px 3px 80px rgb(105, 96, 96);
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(146, 168, 175);
+    font-weight: bold;
+    font-style: italic;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+.inputKonacno {
+    position: center;
+    width: 400px;
+    margin: 20px;
+    margin-left: 210px;
+    box-shadow: inset 3px 3px 80px rgb(105, 96, 96);
+    text-shadow: 0.5px 0.5px 2px rgba(0,0,0,.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(146, 168, 175);
+    font-weight: bold;
+    font-style: italic;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(199, 186, 186);
+    cursor: pointer;
+    letter-spacing: 3px;
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+.greenA {
+    background-color: green !important;
+}
+
+.greenB {
+    background-color: green !important;
+}
+
+.greenC {
+    background-color: green !important;
+}
+
+.greenD {
+    background-color: green !important;
+}
+
+.greenK {
+    background-color: green !important;
+}
+
+
+
+
+
+
+

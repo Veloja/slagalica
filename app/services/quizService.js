@@ -301,4 +301,38 @@ var questions = [
                     {answer: "Michael", correct: false}],
      selected: null}];
 
+
+
+this.getColumns = function(){
+    return columns;
+}
+
+
+var columns = [
+                {id: 1,
+                posibilities: [{a1: "sibir", opened: false},
+                               {a2: "moskva", opened: false},
+                               {a3: "dostojevski", opened: false},
+                               {a4: "putin", opened: false}],
+                solved: false},
+                {id: 2,
+                 posibilities: [{b1: "pariz", opened: false},
+                                {b2: "ajfelov toranj", opened: false},
+                                {b3: "sena", opened: false},
+                                {b4: "tur de frans", opened: false}],
+                solved: false},
+                {id: 3,
+                posibilities: [{c1: 'berlin', opened: false},
+                               {c2: 'berlinski zid', opened: false},
+                               {c3: 'gete', opened: false},
+                               {c4: 'kant', opened: false}],
+                solved: false},
+                {id: 4,
+                posibilities: [{d1: 'beograd', opened: false},
+                               {d2: 'ratovi', opened: false},
+                               {d3: 'beda', opened: false},
+                               {d4: 'zajecar', opened: false}],
+                solved: false}
+              ];
+
 });

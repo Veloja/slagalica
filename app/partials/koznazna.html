@@ -9,7 +9,7 @@
                     <button ng-click="selectAnswer(answer)"
                             ng-class="{'bg-info': answer.selected,
                                         'success': answer.success,
-                                        'bg-danger': answer.fail}",
+                                        'bg-danger': answer.fail}"
                             ng-disabled="disable"
                             class="koznaznaBtn">{{$index+1 + '. '}}{{answer.answer}}
                     </button>

@@ -23,5 +23,10 @@ app.config(function ($routeProvider) {
         	controller: 'KoznaznaController',
         	templateUrl: '/app/partials/koznazna.html'
         })
+        .when('/asocijacije',
+        {
+        	controller: 'AsocijacijeController',
+        	templateUrl: '/app/partials/asocijacije.html'
+        })
         .otherwise({ redirectTo: '/home' });
 });
