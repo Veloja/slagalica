@@ -1,5 +1,30 @@
 <div class="body">
     <div class="container">
-        hello SEDMICKA
+        <div class="row">{{totalScore}}
+            <div class="col-12">
+                <button ng-click="reloadPage()" class="btn btn-large btn-outline-warning">Play new pairs</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button ng-repeat="writer in writers" ng-class="{'selectovan': writer.selected, 'bg-success': writer.solved,
+                                            'bg-danger': writer.fail}" ng-click="openWriter(writer)" id="dugmeLevo">
+                    <h4 class="textLevo">{{writer.name}}</h4>
+                </button>
+            </div>
+            <div class="col-6">
+                <button ng-repeat="novel in novels" ng-disabled="novel.solved" ng-class="{'bg-success': novel.solved}" ng-click="openBook(novel)"
+                    id="dugmeLevo">
+                    <h4 class="textLevo">{{novel.text}}</h4>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <button class="btn btn-large btn-success">{{points}}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

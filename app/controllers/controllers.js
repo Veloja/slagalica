@@ -2,15 +2,16 @@ app.controller('HomeController', function ($scope) {
     console.log('HOME CONTROLER IS ACTIVE');
 });
 
+app.controller('SpojniceController', function ($scope, $timeout, quizService) {
 
-app.controller('SpojniceController', function ($scope, $interval, quizService) {
+    $scope.totalScore = quizService.getTotalScore();
+
     // retrieving data from quizService
     init();
 
     $scope.reloadPage = function () {
         init();
     }
-    $scope.counter = 5;
 
     // only one writer can be opened
     $scope.openWriter = function (writer) {
@@ -31,13 +32,17 @@ app.controller('SpojniceController', function ($scope, $interval, quizService) {
                     $scope.success = true;
                     $scope.currentlyOpenedWriter.selected = false;
                     $scope.points += 2;
+                    $scope.totalScore += 2;
                     nextWriter();
+                    gameOver()
                 }
                 // if currentlyOpenedWriter and opened book don't match =>
             } else {
                 $scope.currentlyOpenedWriter.fail = true;
                 book.fail = true;
                 nextWriter();
+                // FINISH GAME FIRST THEN GO TO A NEXT ONE
+                gameOver();
             }
         }
     }
@@ -45,10 +50,18 @@ app.controller('SpojniceController', function ($scope, $interval, quizService) {
     // function to go on to a next writer when matching completed
     function nextWriter() {
         var indexOfCurrentWritter = $scope.writers.indexOf($scope.currentlyOpenedWriter);
-        console.log($scope.writers.indexOf($scope.currentlyOpenedWriter));
         var nextWriter = $scope.writers[indexOfCurrentWritter + 1];
         nextWriter.selected = true;
         $scope.currentlyOpenedWriter = nextWriter;
+    }
+    // after 5 seconds when all pairs are done, continue on next game
+    function gameOver() {
+        if ($scope.currentlyOpenedWriter.id === 6) {
+            $timeout(function () {
+                // game finished
+                window.location = 'http://127.0.0.1:8080/#/skocko';
+            }, 5000);
+        }
     }
 
     function init() {
@@ -65,23 +78,13 @@ app.controller('SpojniceController', function ($scope, $interval, quizService) {
         $scope.points = 0;
         $scope.cantSelect = false;
     }
-
-    // Countdown time and GAME OVER if counter = 0
-    // setInterval(function(){
-    //     $scope.counter--;
-    //     $scope.$apply();
-    //     if($scope.counter === 0){
-    //         $timeout.cancel($scope.counter);
-    //     }
-    // }, 1000);
-
-    // When time is up => GAME OVER
-
-
 });
 
-app.controller('SkockoController', function ($scope, quizService) {
-    console.log('SKOCKO CTRL');
+app.controller('SkockoController', function ($scope, $timeout, quizService) {
+
+    $scope.totalScore = quizService.getTotalScore();
+    $scope.points = 0;
+
     // retrieve signs
     $scope.options = quizService.getSigns();
     // winning combination
@@ -98,24 +101,31 @@ app.controller('SkockoController', function ($scope, quizService) {
         [{}, {}, {}, {}],
         [{}, {}, {}, {}],
         [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
         [{}, {}, {}, {}]
     ];
 
     $scope.row = 0;
     $scope.column = 0;
     $scope.gameOver = false;
-    // Choose myCombination
+
+    // 
     $scope.selectedOption = function (option) {
         if (!$scope.gameOver) {
             if ($scope.column === 4) {
-                if ($scope.row < 3) {
+                // keep track of rows
+                if ($scope.row < 4) {
                     $scope.column = 0;
                     $scope.row++;
                 } else {
                     $scope.gameOver = true;
+                    if ($scope.gameOver) {
+                        gameOver();
+                    }
                     return;
                 }
             }
+            // keep track of column; when 4signs chosen check combination
             $scope.bigArrOfCombinations[$scope.row][$scope.column] = option;
             $scope.column++;
             if ($scope.column === 4) {
@@ -123,7 +133,7 @@ app.controller('SkockoController', function ($scope, quizService) {
             }
         }
     }
-
+    // main algorithm that checks selected combination and display them with red and yellow
     function checkSkocko(row) {
         var izabrani = $scope.bigArrOfCombinations[row].slice();
         var dobitni = $scope.win.slice();
@@ -144,45 +154,66 @@ app.controller('SkockoController', function ($scope, quizService) {
 
         for (var i = 0; i < result.length; i++) {
             $scope.results[row][i] = result[i];
+            } 
         }
-    }
+    
 
-});
+        function gameOver() {
+            $timeout(function () {
+                // game finished
+                window.location = 'http://127.0.0.1:8080/#/koznazna';
+            }, 5000);
+        }
+
+    });
 
 app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
+
+    $scope.totalScore = quizService.getTotalScore();
 
     $scope.questions = quizService.getQuestions();
 
     $scope.activeQuestion = 0;
     $scope.gameOver = false;
     $scope.disable = false;
+    $scope.points = 0;
 
     $scope.selectAnswer = function (answer) {
         answer.selected = true;
         $scope.disable = true;
-        // first select one answer then check if correct
+        // first select one answer then check if correct and wait for 2sec to check if correct
         $timeout(function () {
             if (answer.selected && answer.correct) {
                 answer.success = true;
+                $scope.points += 5;
+                $scope.totalScore += 5;
             } else {
                 answer.fail = true;
+                $scope.points -= 2;
+                $scope.totalScore -= 2;
             };
         }, 2000);
 
-        // 5 seconds after answer is selected go to next question
+        // 2 seconds after answer is selected go to next question
         if (answer.selected) {
             $timeout(function () {
                 $scope.activeQuestion++;
                 $scope.disable = false;
+                // game finished
+                if ($scope.activeQuestion > 3) {
+                    conosle.log('FINISH GAME THEN GO TO NEXT ONE');
+                    window.location = 'http://127.0.0.1:8080/#/asocijacije';
+                }
             }, 5000);
         }
     }
-
 
 });
 
 app.controller('AsocijacijeController', function ($scope, quizService) {
     $scope.columns = quizService.getColumns();
+    $scope.totalScore = quizService.getTotalScore();
+    $scope.points = 0;
 
     $scope.a1 = false;
     $scope.a2 = false;

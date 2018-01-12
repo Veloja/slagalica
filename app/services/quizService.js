@@ -1,8 +1,14 @@
 app.service('quizService', function(){
+
+    // TOTAL SCORE
+    this.getTotalScore = function(){
+        return totalScore;
+    }
+    var totalScore = 0;
     
     var leftColumnOptions = [];
     var rightColumnOptions = [];
-
+    
     var cities = [{id: 1,
                   name: "Beograd"},
                  {id: 2,
@@ -224,6 +230,8 @@ function shuffle(array) {
    return array;
 }
 
+// ----------- SKOCKO ----------
+
 this.getSigns = function(){
     return signs;
 }
@@ -232,6 +240,7 @@ this.getSigns = function(){
     {
         id: 1,
         sign: "heart",
+        src: "Content/images/heart.jpg",
         chosen: false,
         red: false,
         yellow: false
@@ -239,6 +248,7 @@ this.getSigns = function(){
     {
         id: 2,
         sign: "pike",
+        src: "Content/images/pike.png",
         chosen: false,
         red: false,
         yellow: false
@@ -246,6 +256,7 @@ this.getSigns = function(){
     {
         id: 3,
         sign: "leaf",
+        src: "Content/images/leaf.png",
         chosen: false,
         red: false,
         yellow: false
@@ -253,6 +264,7 @@ this.getSigns = function(){
     {
         id: 4,
         sign: "diamond",
+        src: "Content/images/diamond.jpg",
         chosen: false,
         red: false,
         yellow: false
@@ -260,12 +272,14 @@ this.getSigns = function(){
     {
         id: 5,
         sign: "skocko",
+        src: "Content/images/skocko.jpg",
         chosen: false,
         red: false,
         yellow: false
     },
 ]
 
+// ---------- KO ZNA ZNA -----------
 
 this.getQuestions = function(){
     return questions;
@@ -307,7 +321,7 @@ this.getColumns = function(){
     return columns;
 }
 
-
+// -------- ASOCIJACIJE -------
 var columns = [
                 {id: 1,
                 posibilities: [{a1: "sibir", opened: false},

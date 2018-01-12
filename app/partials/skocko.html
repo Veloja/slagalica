@@ -1,26 +1,29 @@
 <div class="body">
-    <div class="container">
+    <div class="container skocko">
         <div class="row">
-             <div class="col-2">
-                    <button ng-repeat="option in options track by $index"
-                            ng-click="selectedOption(option)"
-                            class="btn choose">
-                        <h4 class="opcijeLevo">{{option.sign}}</h4>
-                    </button>
-             </div>
-             <div class="col-10">row: {{row}} column: {{column}} go: {{gameOver}}
+            <div class="col-2">
+                <button ng-repeat="option in options track by $index" ng-click="selectedOption(option)" class="btn skockoLevoKolona">
+                    <img ng-src="{{option.src}}">
+                </button>
+            </div>
+            <div class="col-10">
                 <div ng-repeat="combination in bigArrOfCombinations track by $index" class="row">
-                    <div ng-repeat="item in bigArrOfCombinations[$index] track by $index" class="col-sm-2">
-                        <button class="rightRow"><h4 class="opcijeLevo">{{item.id}}</h4></button>
+                    <div ng-repeat="item in bigArrOfCombinations[$index] track by $index" class="wrapp col-sm-2">
+                        <button class="skockoPolje">
+                            <img ng-src="{{item.src}}">
+                        </button>
                     </div>
                     <div ng-repeat="item in results[$index] track by $index" class="col-sm-1">
-                        <button ng-class="item.color" class="rightRow"><h4 class="opcijeLevo">{{item.id}}</h4></button>
+                        <button ng-class="item.color" class="skockoPolje">{{item.id}}</button>
                     </div>
                 </div>
+            </div>
+            <div>
+                <button class="btn btn-large btn-success">{{points}}</button>
+            </div>
+            <div>
+                <button class="btn btn-large btn-success">{{totalScore}}</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
