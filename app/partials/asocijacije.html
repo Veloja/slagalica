@@ -1,7 +1,61 @@
 <div class="body">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">{{pointsA}}
+                <div ng-repeat="option in columnA">
+                    <button ng-click="openA(option)">{{option.a}}</button>{{option.opened}}
+                </div>
+                <div>
+                    <form ng-submit="submitA(option)">
+                        <input ng-model="columnAinput" type="text">
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">{{pointsB}}
+                <div ng-repeat="option in columnB">
+                    <button ng-click="openB(option)">{{option.b}}</button>{{option.opened}}
+                </div>
+                <div>
+                    <form ng-submit="submitB(option)">
+                        <input ng-model="columnBinput" type="text">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{pointsC}}
+                <div ng-repeat="option in columnC">
+                    <button ng-click="openC(option)">{{option.c}}</button>{{option.opened}}
+                </div>
+                <div>
+                    <form ng-submit="submitC(option)">
+                        <input ng-model="columnCinput" type="text">
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">{{pointsD}}
+                <div ng-repeat="option in columnD">
+                    <button ng-click="openD(option)">{{option.d}}</button>{{option.opened}}
+                </div>
+                <div>
+                    <form ng-submit="submitD(option)">
+                        <input ng-model="columnDinput" type="text">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="body">
     <div class="container asocijacije">
         <div class="row">
-            <div class="col-6">
+            <div class="col-6">{{columns[0].posibilities.opened1}}
                 <button class="btn btn-primary btnAsocijacije" ng-click="showmeA1()" ng-if="!a1">A1</button>
                 <button ng-class="{'bg-success': greenA, 'green': greenK}" class="btn btnAsocijacije " ng-if="a1">{{columns[0].posibilities[0].a1}}</button>
                 <br>
@@ -78,4 +132,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

@@ -108,8 +108,9 @@ app.controller('SkockoController', function ($scope, $timeout, quizService) {
     $scope.row = 0;
     $scope.column = 0;
     $scope.gameOver = false;
+    $scope.disable = false;
 
-    // 
+    // choosing combinations
     $scope.selectedOption = function (option) {
         if (!$scope.gameOver) {
             if ($scope.column === 4) {
@@ -119,9 +120,6 @@ app.controller('SkockoController', function ($scope, $timeout, quizService) {
                     $scope.row++;
                 } else {
                     $scope.gameOver = true;
-                    if ($scope.gameOver) {
-                        gameOver();
-                    }
                     return;
                 }
             }
@@ -141,6 +139,35 @@ app.controller('SkockoController', function ($scope, $timeout, quizService) {
         for (var i = 0; i < izabrani.length; i++) {
             if (izabrani[i].id === dobitni[i]) {
                 result.push({ color: 'red' });
+                // based on which row give predicted points for right combination
+                if (result.length === 4 && result[i].color === 'red') {
+                    if ($scope.row === 0) {
+                        $scope.points += 6;
+                        $scope.totalScore += 6;
+                        // finish game
+                        gameOver();
+                    } if ($scope.row === 1) {
+                        $scope.points += 5;
+                        $scope.totalScore += 5;
+                        // finish game
+                        gameOver();
+                    } if ($scope.row === 2) {
+                        $scope.points += 4;
+                        $scope.totalScore += 4;
+                        // finish game
+                        gameOver();
+                    } if ($scope.row === 3) {
+                        $scope.points += 3;
+                        $scope.totalScore += 3;
+                        // finish game
+                        gameOver();
+                    } if ($scope.row === 4) {
+                        $scope.points += 2;
+                        $scope.totalScore += 2;
+                        // finish game
+                        gameOver();
+                    }
+                }
                 izabrani[i] = null;
                 dobitni[i] = null;
             }
@@ -154,18 +181,20 @@ app.controller('SkockoController', function ($scope, $timeout, quizService) {
 
         for (var i = 0; i < result.length; i++) {
             $scope.results[row][i] = result[i];
-            } 
         }
-    
+    }
 
-        function gameOver() {
-            $timeout(function () {
-                // game finished
-                window.location = 'http://127.0.0.1:8080/#/koznazna';
-            }, 5000);
-        }
 
-    });
+    function gameOver() {
+        // game finished; disable further clicking
+        $scope.disable = true;
+        $timeout(function () {
+            // and wait for few seconds to go to a next one
+            window.location = 'http://127.0.0.1:8080/#/koznazna';
+        }, 5000);
+    }
+
+});
 
 app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
 
@@ -211,161 +240,131 @@ app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
 });
 
 app.controller('AsocijacijeController', function ($scope, quizService) {
-    $scope.columns = quizService.getColumns();
+    // $scope.columns = quizService.getColumns();
     $scope.totalScore = quizService.getTotalScore();
-    $scope.points = 0;
+    $scope.pointsA = 5;
+    $scope.pointsB = 5;
+    $scope.pointsC = 5;
+    $scope.pointsD = 5;
+    $scope.gameScore = 20;
+    $scope.columnAinput = '';
+    $scope.columnBinput = '';
+    $scope.columnCinput = '';
+    $scope.columnDinput = '';
 
-    $scope.a1 = false;
-    $scope.a2 = false;
-    $scope.a3 = false;
-    $scope.a4 = false;
+    $scope.columnA = [{ a: 'A1', text: 'sibir', opened: false },
+    { a: 'A2', text: 'moskva', opened: false },
+    { a: 'A3', text: 'putin', opened: false },
+    { a: 'A3', text: 'dostojevski', opened: false }];
 
-    $scope.b1 = false;
-    $scope.b2 = false;
-    $scope.b3 = false;
-    $scope.b4 = false;
+    $scope.columnB = [{ b: 'A1', text: 'pariz', opened: false },
+    { b: 'A2', text: 'ajfelov toranj', opened: false },
+    { b: 'A3', text: 'sena', opened: false },
+    { b: 'A3', text: 'tur de frans', opened: false }];
 
-    $scope.c1 = false;
-    $scope.c2 = false;
-    $scope.c3 = false;
-    $scope.c4 = false;
+    $scope.columnC = [{ c: 'A1', text: 'berlinski zid', opened: false },
+    { c: 'A2', text: 'berlin', opened: false },
+    { c: 'A3', text: 'bajern', opened: false },
+    { c: 'A3', text: 'gete', opened: false }];
 
-    $scope.d1 = false;
-    $scope.d2 = false;
-    $scope.d3 = false;
-    $scope.d4 = false;
+    $scope.columnD = [{ d: 'A1', text: 'beograd', opened: false },
+    { d: 'A2', text: 'zajecar', opened: false },
+    { d: 'A3', text: 'ratovi', opened: false },
+    { d: 'A3', text: 'beda', opened: false }];
 
-    $scope.a = '';
-    $scope.aWin = 'rusija';
-    $scope.b = '';
-    $scope.bWin = 'francuska';
-    $scope.c = '';
-    $scope.cWin = 'nemacka';
-    $scope.d = '';
-    $scope.dWin = 'srbija';
-    $scope.konacno = '';
-    $scope.konacnoWin = 'evropa';
+    $scope.openA = function (option) {
+        option.opened = true;
+        option.a = option.text;
+    }
+
+    $scope.openB = function (option) {
+        option.opened = true;
+        option.b = option.text;
+    }
+
+    $scope.openC = function (option) {
+        option.opened = true;
+        option.c = option.text;
+    }
+
+    $scope.openD = function (option) {
+        option.opened = true;
+        option.d = option.text;
+    }
 
     $scope.submitA = function () {
-        if ($scope.a === $scope.aWin) {
-            $scope.a1 = true;
-            $scope.a2 = true;
-            $scope.a3 = true;
-            $scope.a4 = true;
-            $scope.greenA = true;
+        if ($scope.columnAinput === 'rusija') {
+            console.log('sve treba da pozeleni');
+            // check how many points you have based on opened fields
+            checkA();
         } else {
-            $scope.a = '';
+            $scope.columnAinput = '';
         }
     }
 
     $scope.submitB = function () {
-        if ($scope.b === $scope.bWin) {
-            $scope.b1 = true;
-            $scope.b2 = true;
-            $scope.b3 = true;
-            $scope.b4 = true;
-            $scope.greenB = true;
+        if ($scope.columnBinput === 'francuska') {
+            console.log('sve treba da pozeleni');
+            // check how many points you have based on opened fields
+            checkB();
         } else {
-            $scope.b = '';
+            $scope.columnBinput = '';
         }
     }
 
     $scope.submitC = function () {
-        if ($scope.c === $scope.cWin) {
-            $scope.c1 = true;
-            $scope.c2 = true;
-            $scope.c3 = true;
-            $scope.c4 = true;
-            $scope.greenC = true;
+        if ($scope.columnCinput === 'nemacka') {
+            console.log('sve treba da pozeleni');
+            // check how many points you have based on opened fields
+            checkC();
         } else {
-            $scope.c = '';
+            $scope.columnCinput = '';
         }
     }
 
     $scope.submitD = function () {
-        if ($scope.d === $scope.dWin) {
-            $scope.d1 = true;
-            $scope.d2 = true;
-            $scope.d3 = true;
-            $scope.d4 = true;
-            $scope.greenD = true;
+        if ($scope.columnDinput === 'srbija') {
+            console.log('sve treba da pozeleni');
+            // check how many points you have based on opened fields
+            checkD();
         } else {
-            $scope.d = '';
+            $scope.columnDinput = '';
         }
     }
 
-    $scope.submitKonacno = function () {
-        if ($scope.konacno === $scope.konacnoWin) {
-            $scope.d1 = true;
-            $scope.d2 = true;
-            $scope.d3 = true;
-            $scope.d4 = true;
-            $scope.a1 = true;
-            $scope.a2 = true;
-            $scope.a3 = true;
-            $scope.a4 = true;
-            $scope.b1 = true;
-            $scope.b2 = true;
-            $scope.b3 = true;
-            $scope.b4 = true;
-            $scope.c1 = true;
-            $scope.c2 = true;
-            $scope.c3 = true;
-            $scope.c4 = true;
-            $scope.greenK = true;
-        } else {
-            console.log('promasaj');
-            $scope.konacno = '';
-        }
+    function checkA(){
+        $scope.columnA.forEach(function(option){
+            if(option.opened){
+                $scope.pointsA--;
+                $scope.gameScore--;
+            }
+        });
+    }
+    function checkB(){
+        $scope.columnB.forEach(function(option){
+            if(option.opened){
+                $scope.pointsB--;
+                $scope.gameScore--;
+            }
+        });
+    }
+    function checkC(){
+        $scope.columnC.forEach(function(option){
+            if(option.opened){
+                $scope.pointsC--;
+                $scope.gameScore--;
+            }
+        });
+    }
+    function checkD(){
+        $scope.columnD.forEach(function(option){
+            if(option.opened){
+                $scope.pointsD--;
+                $scope.gameScore--;
+            }
+        });
     }
 
-    $scope.showmeA1 = function () {
-        $scope.a1 = true;
-    }
-    $scope.showmeA2 = function () {
-        $scope.a2 = true;
-    }
-    $scope.showmeA3 = function () {
-        $scope.a3 = true;
-    }
-    $scope.showmeA4 = function () {
-        $scope.a4 = true;
-    }
-    $scope.showmeB1 = function () {
-        $scope.b1 = true;
-    }
-    $scope.showmeB2 = function () {
-        $scope.b2 = true;
-    }
-    $scope.showmeB3 = function () {
-        $scope.b3 = true;
-    }
-    $scope.showmeB4 = function () {
-        $scope.b4 = true;
-    }
-    $scope.showmeC1 = function () {
-        $scope.c1 = true;
-    }
-    $scope.showmeC2 = function () {
-        $scope.c2 = true;
-    }
-    $scope.showmeC3 = function () {
-        $scope.c3 = true;
-    }
-    $scope.showmeC4 = function () {
-        $scope.c4 = true;
-    }
-    $scope.showmeD1 = function () {
-        $scope.d1 = true;
-    }
-    $scope.showmeD2 = function () {
-        $scope.d2 = true;
-    }
-    $scope.showmeD3 = function () {
-        $scope.d3 = true;
-    }
-    $scope.showmeD4 = function () {
-        $scope.d4 = true;
-    }
+    
 
-});
+    });

@@ -98,8 +98,7 @@ app.service('quizService', function(){
             leftColumnOptions.push(shuffledDirectors);
             // randomize left column with only one array
                 return leftColumnOptions[Math.floor((Math.random() * 3))];
-    }
-    
+    }    
     
     var novels = [{writerId: 1, 
                     text: "Dervis i Smrt",
@@ -322,31 +321,31 @@ this.getColumns = function(){
 }
 
 // -------- ASOCIJACIJE -------
-var columns = [
-                {id: 1,
-                posibilities: [{a1: "sibir", opened: false},
-                               {a2: "moskva", opened: false},
-                               {a3: "dostojevski", opened: false},
-                               {a4: "putin", opened: false}],
-                solved: false},
-                {id: 2,
-                 posibilities: [{b1: "pariz", opened: false},
-                                {b2: "ajfelov toranj", opened: false},
-                                {b3: "sena", opened: false},
-                                {b4: "tur de frans", opened: false}],
-                solved: false},
-                {id: 3,
-                posibilities: [{c1: 'berlin', opened: false},
-                               {c2: 'berlinski zid', opened: false},
-                               {c3: 'gete', opened: false},
-                               {c4: 'kant', opened: false}],
-                solved: false},
-                {id: 4,
-                posibilities: [{d1: 'beograd', opened: false},
-                               {d2: 'ratovi', opened: false},
-                               {d3: 'beda', opened: false},
-                               {d4: 'zajecar', opened: false}],
-                solved: false}
-              ];
+// var column = [
+//                 {id: 1,
+//                 posibilities: [{a: "sibir", opened: false},
+//                                {a: "moskva", opened: false},
+//                                {a: "dostojevski", opened: false},
+//                                {a: "putin", opened: false}],
+//                 solved: false},
+//                 {id: 2,
+//                  posibilities: [{b: "pariz", opened: false},
+//                                 {b: "ajfelov toranj", opened: false},
+//                                 {b: "sena", opened: false},
+//                                 {b: "tur de frans", opened: false}],
+//                 solved: false},
+//                 {id: 3,
+//                 posibilities: [{c: 'berlin', opened: false},
+//                                {c: 'berlinski zid', opened: false},
+//                                {c: 'gete', opened: false},
+//                                {c: 'kant', opened: false}],
+//                 solved: false},
+//                 {id: 4,
+//                 posibilities: [{d: 'beograd', opened: false},
+//                                {d: 'ratovi', opened: false},
+//                                {d: 'beda', opened: false},
+//                                {d: 'zajecar', opened: false}],
+//                 solved: false}
+//               ];
 
 });
