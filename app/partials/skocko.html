@@ -1,10 +1,13 @@
 <div class="body">
     <div class="container skocko">
+            <div>
+                    Total score:
+                    <button class="btn btn-small btn-primary">{{totalScore.score}}</button>
         <div class="row">
             <div class="col-2">
                 <button ng-disabled="disable" ng-repeat="option in options track by $index" ng-click="selectedOption(option)" class="btn skockoLevoKolona">
                     <img ng-src="{{option.src}}">
-                </button>{{'ROW' + row + 'COL' + column}}
+                </button>
             </div>
             <div class="col-10">
                 <div ng-repeat="combination in bigArrOfCombinations track by $index" class="row">
@@ -20,9 +23,6 @@
             </div>
             <div>
                 <button class="btn btn-large btn-success">{{points}}</button>
-            </div>
-            <div>
-                <button class="btn btn-large btn-success">{{totalScore}}</button>
             </div>
         </div>
     </div>

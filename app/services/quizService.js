@@ -4,7 +4,7 @@ app.service('quizService', function(){
     this.getTotalScore = function(){
         return totalScore;
     }
-    var totalScore = 0;
+    var totalScore = { score: 0};
     
     var leftColumnOptions = [];
     var rightColumnOptions = [];
@@ -286,66 +286,34 @@ this.getQuestions = function(){
 
 var questions = [
     {id: 1, 
-     text: "What is middle name of LeBron James?",
-     posibilities: [{answer: "Raymone", correct: false}, 
-                    {answer: "Lavar", correct: true},
-                    {answer: "Josh", correct: false},
-                    {answer: "Michael", correct: false}],
+     text: "Ko je najbolji kosarkas na svetu?",
+     posibilities: [{answer: "LeBron", correct: true}, 
+                    {answer: "Bryant", correct: false},
+                    {answer: "Jordan", correct: false},
+                    {answer: "Bogdanovic", correct: false}],
      selected: false},
      {id: 2, 
-     text: "What is middle name of Kevin Durant?",
-     posibilities: [{answer: "Raymone", correct: true}, 
-                    {answer: "Lavar", correct: false},
-                    {answer: "Wayne", correct: false},
-                    {answer: "Michael", correct: false}],
+     text: "Ko je najbolji pisac na svetu?",
+     posibilities: [{answer: "Dostojevski", correct: true}, 
+                    {answer: "Gete", correct: false},
+                    {answer: "Tolstoj", correct: false},
+                    {answer: "Hese", correct: false}],
      selected: null},
      {id: 3, 
-     text: "What is middle name of Kobe Bryant?",
-     posibilities: [{answer: "Bean", correct: false}, 
-                    {answer: "Lavar", correct: false},
-                    {answer: "Josh", correct: false},
-                    {answer: "Michael", correct: true}],
+     text: "Koji od ovih gradova je najblizi bugarskoj granici?",
+     posibilities: [{answer: "Donji Milanovac", correct: false}, 
+                    {answer: "Nis", correct: false},
+                    {answer: "Beograd", correct: false},
+                    {answer: "Zajecar", correct: true}],
      selected: null},
      {id: 4, 
-     text: "What is middle name of Michael Jordan?",
-     posibilities: [{answer: "Jeffrey", correct: false}, 
-                    {answer: "Lavar", correct: true},
-                    {answer: "Josh", correct: false},
-                    {answer: "Michael", correct: false}],
+     text: "Koji fudbalski klub je iz Zajecara?",
+     posibilities: [{answer: "Partizan", correct: false}, 
+                    {answer: "Timok", correct: true},
+                    {answer: "Mladost", correct: false},
+                    {answer: "Cukaricki", correct: false}],
      selected: null}];
 
-
-
-this.getColumns = function(){
-    return columns;
-}
-
 // -------- ASOCIJACIJE -------
-// var column = [
-//                 {id: 1,
-//                 posibilities: [{a: "sibir", opened: false},
-//                                {a: "moskva", opened: false},
-//                                {a: "dostojevski", opened: false},
-//                                {a: "putin", opened: false}],
-//                 solved: false},
-//                 {id: 2,
-//                  posibilities: [{b: "pariz", opened: false},
-//                                 {b: "ajfelov toranj", opened: false},
-//                                 {b: "sena", opened: false},
-//                                 {b: "tur de frans", opened: false}],
-//                 solved: false},
-//                 {id: 3,
-//                 posibilities: [{c: 'berlin', opened: false},
-//                                {c: 'berlinski zid', opened: false},
-//                                {c: 'gete', opened: false},
-//                                {c: 'kant', opened: false}],
-//                 solved: false},
-//                 {id: 4,
-//                 posibilities: [{d: 'beograd', opened: false},
-//                                {d: 'ratovi', opened: false},
-//                                {d: 'beda', opened: false},
-//                                {d: 'zajecar', opened: false}],
-//                 solved: false}
-//               ];
 
 });

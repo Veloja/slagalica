@@ -1,135 +1,60 @@
 <div class="body">
-    <div class="container">
-        <div class="row">
-            <div class="col-6">{{pointsA}}
-                <div ng-repeat="option in columnA">
-                    <button ng-click="openA(option)">{{option.a}}</button>{{option.opened}}
-                </div>
-                <div>
-                    <form ng-submit="submitA(option)">
-                        <input ng-model="columnAinput" type="text">
-                    </form>
-                </div>
-            </div>
-            <div class="col-6">{{pointsB}}
-                <div ng-repeat="option in columnB">
-                    <button ng-click="openB(option)">{{option.b}}</button>{{option.opened}}
-                </div>
-                <div>
-                    <form ng-submit="submitB(option)">
-                        <input ng-model="columnBinput" type="text">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">{{pointsC}}
-                <div ng-repeat="option in columnC">
-                    <button ng-click="openC(option)">{{option.c}}</button>{{option.opened}}
-                </div>
-                <div>
-                    <form ng-submit="submitC(option)">
-                        <input ng-model="columnCinput" type="text">
-                    </form>
-                </div>
-            </div>
-            <div class="col-6">{{pointsD}}
-                <div ng-repeat="option in columnD">
-                    <button ng-click="openD(option)">{{option.d}}</button>{{option.opened}}
-                </div>
-                <div>
-                    <form ng-submit="submitD(option)">
-                        <input ng-model="columnDinput" type="text">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-<!-- <div class="body">
     <div class="container asocijacije">
-        <div class="row">
-            <div class="col-6">{{columns[0].posibilities.opened1}}
-                <button class="btn btn-primary btnAsocijacije" ng-click="showmeA1()" ng-if="!a1">A1</button>
-                <button ng-class="{'bg-success': greenA, 'green': greenK}" class="btn btnAsocijacije " ng-if="a1">{{columns[0].posibilities[0].a1}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeA2()" ng-if="!a2">A2</button>
-                <button ng-class="{'bg-success': greenA, 'green': greenK}" class="btn btnAsocijacije " ng-if="a2">{{columns[0].posibilities[1].a2}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeA3()" ng-if="!a3">A3</button>
-                <button ng-class="{'bg-success': greenA, 'green': greenK}" class="btn btnAsocijacije " ng-if="a3">{{columns[0].posibilities[2].a3}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeA4()" ng-if="!a4">A4</button>
-                <button ng-class="{'bg-success': greenA, 'green': greenK}" class="btn btnAsocijacije " ng-if="a4">{{columns[0].posibilities[3].a4}}</button>
-                <br>
-                <form ng-submit="submitA()">
-                    <input ng-class="{'bg-success': greenA}" class="inputAsocijacije" ng-model="a" type="text">
-                </form>
+        <div>
+            <h3>{{'TOTAL SCORE: ' + totalScore.score}}</h3>
+            <div class="row">
+                <div class="col-6">
+                    <div ng-repeat="item in ArrOfColumns[0] track by $index">
+                        <button ng-class="{'green': successA}" ng-click="open(item)" class="btnAsocijacije"> {{item.a}}
+                        </button>
+                    </div>
+                    <h3 ng-if="colA">{{'KOLONA A ' + pointsA + ' poena'}}</h3>
+                    <form ng-submit="submit(ArrOfColumns[0])">
+                        <input class="inputAsocijacije" ng-model="columnInputs[0]" type="text">
+                    </form>
+                </div>
+                <div class="col-6">
+                    <div ng-repeat="item in ArrOfColumns[1] track by $index">
+                        <button ng-class="{'green': successB}" ng-click="open(item, ArrOfColumns[1])" class="btnAsocijacije"> {{item.a}}
+                        </button>
+                    </div>
+                    <h3 ng-if="colB">{{'KOLONA B ' + pointsB + ' poena'}}</h3>
+                    <form ng-submit="submit(ArrOfColumns[1])">
+                        <input class="inputAsocijacije" ng-model="columnInputs[1]" type="text">
+                    </form>
+                </div>
             </div>
-            <div class="col-6">
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeB1()" ng-if="!b1">B1</button>
-                <button ng-class="{'bg-success': greenB, 'green': greenK}" class="btn btnAsocijacije" ng-if="b1">{{columns[1].posibilities[0].b1}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeB2()" ng-if="!b2">B2</button>
-                <button ng-class="{'bg-success': greenB, 'green': greenK}" class="btn btnAsocijacije " ng-if="b2">{{columns[1].posibilities[1].b2}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeB3()" ng-if="!b3">B3</button>
-                <button ng-class="{'bg-success': greenB, 'green': greenK}" class="btn btnAsocijacije " class="btn btn-primary" ng-if="b3">{{columns[1].posibilities[2].b3}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeB4()" ng-if="!b4">B4</button>
-                <button ng-class="{'bg-success': greenB, 'green': greenK}" class="btn btnAsocijacije " ng-if="b4">{{columns[1].posibilities[3].b4}}</button>
-                <br>
-                <form ng-submit="submitB()">
-                    <input ng-class="{'bg-success': greenB}" class="inputAsocijacije" ng-model="b" type="text">
-                </form>
+            <!-- end of first row -->
+            <div class="row">
+                <div class="col-12">
+                    <form ng-submit="submitKonacno(ArrOfColumns[0], ArrOfColumns[1], ArrOfColumns[2], ArrOfColumns[3])">
+                        <input class="inputKonacno" ng-model="konacno" type="text">
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="row col-12">
-            <form ng-submit="submitKonacno()">
-                <input ng-class="{'green': greenK}" class="inputKonacno" ng-model="konacno" type="text">
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <form ng-submit="submitC()">
-                    <input ng-class="{'bg-success': greenC}" class="inputAsocijacije" ng-model="c" type="text">
-                </form>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeC1()" ng-if="!c1">c1</button>
-                <button ng-class="{'bg-success': greenC, 'green': greenK}" class="btn btnAsocijacije " ng-if="c1">{{columns[2].posibilities[0].c1}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeC2()" ng-if="!c2">c2</button>
-                <button ng-class="{'bg-success': greenC, 'green': greenK}" class="btn btnAsocijacije " ng-if="c2">{{columns[2].posibilities[1].c2}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeC3()" ng-if="!c3">c3</button>
-                <button ng-class="{'bg-success': greenC, 'green': greenK}" class="btn btnAsocijacije " ng-if="c3">{{columns[2].posibilities[2].c3}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeC4()" ng-if="!c4">c4</button>
-                <button ng-class="{'bg-success': greenC, 'green': greenK}" class="btn btnAsocijacije " ng-if="c4">{{columns[2].posibilities[3].c4}}</button>
-                <br>
+            <!-- end of KONACNO -->
+            <div class="row">
+                <div class="col-6">
+                    <h3 ng-if="colC">{{'KOLONA C ' + pointsC + ' poena'}}</h3>
+                    <form ng-submit="submit(ArrOfColumns[2])">
+                        <input class="inputAsocijacije" ng-model="columnInputs[2]" type="text">
+                    </form>
+                    <div ng-repeat="item in ArrOfColumns[2] track by $index">
+                        <button ng-class="{'green': successC}" ng-click="open(item, ArrOfColumns[2])" class="btnAsocijacije"> {{item.a}}
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h3 ng-if="colD">{{'KOLONA D ' + pointsD + ' poena'}}</h3>
+                    <form ng-submit="submit(ArrOfColumns[3])">
+                        <input class="inputAsocijacije" ng-model="columnInputs[3]" type="text">
+                    </form>
+                    <div ng-repeat="item in ArrOfColumns[3] track by $index">
+                        <button ng-class="{'green': successD}" ng-click="open(item, ArrOfColumns[3])" class="btnAsocijacije"> {{item.a}}
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-6">
-                <form ng-submit="submitD()">
-                    <input ng-class="{'bg-success': greenD}" class="inputAsocijacije" ng-model="d" type="text">
-                </form>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeD1()" ng-if="!d1">d1</button>
-                <button ng-class="{'bg-success': greenD, 'green': greenK}" class="btn btnAsocijacije " ng-if="d1">{{columns[3].posibilities[0].d1}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeD2()" ng-if="!d2">d2</button>
-                <button ng-class="{'bg-success': greenD, 'green': greenK}" class="btn btnAsocijacije " ng-if="d2">{{columns[3].posibilities[1].d2}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeD3()" ng-if="!d3">d3</button>
-                <button ng-class="{'bg-success': greenD, 'green': greenK}" class="btn btnAsocijacije " ng-if="d3">{{columns[3].posibilities[2].d3}}</button>
-                <br>
-                <button  class="btn btn-primary btnAsocijacije" ng-click="showmeD4()" ng-if="!d4">d4</button>
-                <button ng-class="{'bg-success': greenD, 'green': greenK}" class="btn btnAsocijacije " ng-if="d4">{{columns[3].posibilities[3].d4}}</button>
-                <br>
-            </div>
+            <!-- end of second row -->
         </div>
     </div>
-</div> -->

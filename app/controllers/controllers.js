@@ -3,9 +3,6 @@ app.controller('HomeController', function ($scope) {
 });
 
 app.controller('SpojniceController', function ($scope, $timeout, quizService) {
-
-    $scope.totalScore = quizService.getTotalScore();
-
     // retrieving data from quizService
     init();
 
@@ -32,7 +29,7 @@ app.controller('SpojniceController', function ($scope, $timeout, quizService) {
                     $scope.success = true;
                     $scope.currentlyOpenedWriter.selected = false;
                     $scope.points += 2;
-                    $scope.totalScore += 2;
+                    $scope.totalScore.score += 2;
                     nextWriter();
                     gameOver()
                 }
@@ -66,6 +63,7 @@ app.controller('SpojniceController', function ($scope, $timeout, quizService) {
 
     function init() {
         $scope.writers = quizService.getWriters();
+        $scope.totalScore = quizService.getTotalScore();
         $scope.writers.forEach(writter => {
             writter.selected = false;
             writter.fail = false;
@@ -143,27 +141,27 @@ app.controller('SkockoController', function ($scope, $timeout, quizService) {
                 if (result.length === 4 && result[i].color === 'red') {
                     if ($scope.row === 0) {
                         $scope.points += 6;
-                        $scope.totalScore += 6;
+                        $scope.totalScore.score += 6;
                         // finish game
                         gameOver();
                     } if ($scope.row === 1) {
                         $scope.points += 5;
-                        $scope.totalScore += 5;
+                        $scope.totalScore.score += 5;
                         // finish game
                         gameOver();
                     } if ($scope.row === 2) {
                         $scope.points += 4;
-                        $scope.totalScore += 4;
+                        $scope.totalScore.score += 4;
                         // finish game
                         gameOver();
                     } if ($scope.row === 3) {
                         $scope.points += 3;
-                        $scope.totalScore += 3;
+                        $scope.totalScore.score += 3;
                         // finish game
                         gameOver();
                     } if ($scope.row === 4) {
                         $scope.points += 2;
-                        $scope.totalScore += 2;
+                        $scope.totalScore.score += 2;
                         // finish game
                         gameOver();
                     }
@@ -215,11 +213,11 @@ app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
             if (answer.selected && answer.correct) {
                 answer.success = true;
                 $scope.points += 5;
-                $scope.totalScore += 5;
+                $scope.totalScore.score += 5;
             } else {
                 answer.fail = true;
                 $scope.points -= 2;
-                $scope.totalScore -= 2;
+                $scope.totalScore.score -= 2;
             };
         }, 2000);
 
@@ -230,7 +228,6 @@ app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
                 $scope.disable = false;
                 // game finished
                 if ($scope.activeQuestion > 3) {
-                    conosle.log('FINISH GAME THEN GO TO NEXT ONE');
                     window.location = 'http://127.0.0.1:8080/#/asocijacije';
                 }
             }, 5000);
@@ -240,131 +237,127 @@ app.controller('KoznaznaController', function ($scope, $timeout, quizService) {
 });
 
 app.controller('AsocijacijeController', function ($scope, quizService) {
-    // $scope.columns = quizService.getColumns();
     $scope.totalScore = quizService.getTotalScore();
+    // Asocijacije tracking score
     $scope.pointsA = 5;
     $scope.pointsB = 5;
     $scope.pointsC = 5;
     $scope.pointsD = 5;
     $scope.gameScore = 20;
-    $scope.columnAinput = '';
-    $scope.columnBinput = '';
-    $scope.columnCinput = '';
-    $scope.columnDinput = '';
+    $scope.endSlagalica = false;
+    // inputs and solutions
+    $scope.columnInputs = ['', '', '', ''];
+    $scope.columnSolutions = ['rusija', 'francuska', 'nemacka', 'srbija'];
+    $scope.konacno = '';
+    $scope.konacnoWin = 'evropa';
 
-    $scope.columnA = [{ a: 'A1', text: 'sibir', opened: false },
-    { a: 'A2', text: 'moskva', opened: false },
-    { a: 'A3', text: 'putin', opened: false },
-    { a: 'A3', text: 'dostojevski', opened: false }];
-
-    $scope.columnB = [{ b: 'A1', text: 'pariz', opened: false },
-    { b: 'A2', text: 'ajfelov toranj', opened: false },
-    { b: 'A3', text: 'sena', opened: false },
-    { b: 'A3', text: 'tur de frans', opened: false }];
-
-    $scope.columnC = [{ c: 'A1', text: 'berlinski zid', opened: false },
-    { c: 'A2', text: 'berlin', opened: false },
-    { c: 'A3', text: 'bajern', opened: false },
-    { c: 'A3', text: 'gete', opened: false }];
-
-    $scope.columnD = [{ d: 'A1', text: 'beograd', opened: false },
-    { d: 'A2', text: 'zajecar', opened: false },
-    { d: 'A3', text: 'ratovi', opened: false },
-    { d: 'A3', text: 'beda', opened: false }];
-
-    $scope.openA = function (option) {
-        option.opened = true;
-        option.a = option.text;
+    // open clicked field in column
+    $scope.open = function (item) {
+        item.opened = true;
+        item.a = item.text;
     }
-
-    $scope.openB = function (option) {
-        option.opened = true;
-        option.b = option.text;
-    }
-
-    $scope.openC = function (option) {
-        option.opened = true;
-        option.c = option.text;
-    }
-
-    $scope.openD = function (option) {
-        option.opened = true;
-        option.d = option.text;
-    }
-
-    $scope.submitA = function () {
-        if ($scope.columnAinput === 'rusija') {
-            console.log('sve treba da pozeleni');
-            // check how many points you have based on opened fields
-            checkA();
+    // check Konacno solution and calculate total gameScore
+    $scope.submitKonacno = function (colA, colB, colC, colD) {
+        if ($scope.konacno === $scope.konacnoWin) {
+            // give green class to all columns
+            $scope.colA = true;
+            $scope.colB = true;
+            $scope.colC = true;
+            $scope.colD = true;
+            $scope.successA = true;
+            $scope.successB = true;
+            $scope.successC = true;
+            $scope.successD = true;
+            $scope.endSlagalica = true;
+            for (var i = 0; i < 4; i++) {
+                // check how many times each column has been opened (how many fields are open)
+                //  and substract certain amount of gameScore based on that
+                if (colA[i].opened) {
+                    $scope.gameScore--;
+                } if (colB[i].opened) {
+                    $scope.gameScore--;
+                } if (colC[i].opened) {
+                    $scope.gameScore--;
+                } if (colD[i].opened) {
+                    $scope.gameScore--;
+                }
+            } 
         } else {
-            $scope.columnAinput = '';
+            $scope.konacno = '';
         }
     }
 
-    $scope.submitB = function () {
-        if ($scope.columnBinput === 'francuska') {
-            console.log('sve treba da pozeleni');
-            // check how many points you have based on opened fields
-            checkB();
-        } else {
-            $scope.columnBinput = '';
+    $scope.submit = function (column) {
+        checkColumns(column);
+    }
+    // check column solution and give certain points
+    function checkColumns(column) {
+        for (var i = 0; i < $scope.columnSolutions.length; i++) {
+            if ($scope.ArrOfColumns[0] === column) {
+                if ($scope.columnInputs[0] === $scope.columnSolutions[0]) {
+                    if (column[i].opened) {
+                        $scope.pointsA--;
+                        $scope.successA = true;
+                        $scope.colA = true;
+                        console.log('substract points from column A');
+                    }
+                } else {
+                    $scope.columnInputs[0] = '';
+                }
+            } if ($scope.ArrOfColumns[1] === column) {
+                if ($scope.columnInputs[1] === $scope.columnSolutions[1]) {
+                    if (column[i].opened) {
+                        $scope.pointsB--;
+                        $scope.successB = true;
+                        $scope.colB = true;
+                        console.log('substract points from column B');
+                    }
+                } else {
+                    $scope.columnInputs[1] = '';
+                }
+            } if ($scope.ArrOfColumns[2] === column) {
+                if ($scope.columnInputs[2] === $scope.columnSolutions[2]) {
+                    if (column[i].opened) {
+                        $scope.pointsC--;
+                        $scope.successC = true;
+                        $scope.colC = true;
+                        console.log('substract points from column C');
+                    }
+                } else {
+                    $scope.columnInputs[2] = '';
+                }
+            } if ($scope.ArrOfColumns[3] === column) {
+                if ($scope.columnInputs[3] === $scope.columnSolutions[3]) {
+                    if (column[i].opened) {
+                        $scope.pointsD--;
+                        $scope.successD = true;
+                        $scope.colD = true;
+                        console.log('substract points from column D');
+                    }
+                } else {
+                    $scope.columnInputs[3] = '';
+                }
+            }
         }
     }
 
-    $scope.submitC = function () {
-        if ($scope.columnCinput === 'nemacka') {
-            console.log('sve treba da pozeleni');
-            // check how many points you have based on opened fields
-            checkC();
-        } else {
-            $scope.columnCinput = '';
-        }
-    }
+    $scope.ArrOfColumns = [
+        [{ a: 'A1', text: 'sibir', opened: false },
+        { a: 'A2', text: 'moskva', opened: false },
+        { a: 'A3', text: 'putin', opened: false },
+        { a: 'A4', text: 'dostojevski', opened: false }],
+        [{ a: 'B1', text: 'pariz', opened: false },
+        { a: 'B2', text: 'ajfelov toranj', opened: false },
+        { a: 'B3', text: 'sena', opened: false },
+        { a: 'B4', text: 'tur de frans', opened: false }],
+        [{ a: 'C1', text: 'berlinski zid', opened: false },
+        { a: 'C2', text: 'berlin', opened: false },
+        { a: 'C3', text: 'bajern', opened: false },
+        { a: 'C4', text: 'gete', opened: false }],
+        [{ a: 'D1', text: 'beograd', opened: false },
+        { a: 'D2', text: 'zajecar', opened: false },
+        { a: 'D3', text: 'ratovi', opened: false },
+        { a: 'D4', text: 'beda', opened: false }]
+    ];
 
-    $scope.submitD = function () {
-        if ($scope.columnDinput === 'srbija') {
-            console.log('sve treba da pozeleni');
-            // check how many points you have based on opened fields
-            checkD();
-        } else {
-            $scope.columnDinput = '';
-        }
-    }
-
-    function checkA(){
-        $scope.columnA.forEach(function(option){
-            if(option.opened){
-                $scope.pointsA--;
-                $scope.gameScore--;
-            }
-        });
-    }
-    function checkB(){
-        $scope.columnB.forEach(function(option){
-            if(option.opened){
-                $scope.pointsB--;
-                $scope.gameScore--;
-            }
-        });
-    }
-    function checkC(){
-        $scope.columnC.forEach(function(option){
-            if(option.opened){
-                $scope.pointsC--;
-                $scope.gameScore--;
-            }
-        });
-    }
-    function checkD(){
-        $scope.columnD.forEach(function(option){
-            if(option.opened){
-                $scope.pointsD--;
-                $scope.gameScore--;
-            }
-        });
-    }
-
-    
-
-    });
+});

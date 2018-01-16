@@ -1,7 +1,8 @@
 <div class="body">
     <div class="container">
         <div>
-            <button class="btn btn-large btn-success">{{totalScore}}</button>
+            Total score:
+            <button class="btn btn-small btn-primary">{{totalScore.score}}</button>
         </div>
         <div class="row">
             <div class="col-12">
@@ -12,7 +13,7 @@
             <div ng-repeat="answer in questions[activeQuestion].posibilities" class="col-6">
                 <button ng-click="selectAnswer(answer)" ng-class="{'bg-info': answer.selected,
                                     'success': answer.success,
-                                    'bg-danger': answer.fail}" ng-disabled="disable" class="koznaznaBtn">{{$index+1 + '. '}}{{answer.answer}}
+                                    'bg-danger': answer.fail}" ng-disabled="disable" class="koznaznaBtn">{{answer.answer}}
                 </button>
             </div>
         </div>

@@ -1,8 +1,10 @@
 <div class="body">
     <div class="container">
-        <div class="row"> <div>
-            <button class="btn btn-large btn-success">{{totalScore}}</button>
+        <div>
+            Total score:
+            <button class="btn btn-small btn-primary">{{totalScore.score}}</button>
         </div>
+        <div class="row">
             <div class="col-12">
                 <button ng-click="reloadPage()" class="btn btn-large btn-outline-warning">Play new pairs</button>
             </div>
