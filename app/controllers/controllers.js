@@ -53,7 +53,7 @@ app.controller('SpojniceController', function ($scope, $timeout, quizService) {
     }
     // after 5 seconds when all pairs are done, continue on next game
     function gameOver() {
-        if ($scope.currentlyOpenedWriter.id === 6) {
+        if ($scope.currentlyOpenedWriter === $scope.writers[6]) {
             $timeout(function () {
                 // game finished
                 window.location = 'http://127.0.0.1:8080/#/skocko';
